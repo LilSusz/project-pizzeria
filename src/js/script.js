@@ -6,6 +6,7 @@
 const select = {
   templateOf: {
     menuProduct: "#template-menu-product",
+    cartProduct: '#template-cart-product',
     },
     containerOf: {
       menu: '#product-list',
@@ -26,10 +27,28 @@ const select = {
     },
     widgets: {
       amount: {
-        input: 'input[name="amount"]',
+        input: 'input.amount',
         linkDecrease: 'a[href="#less"]',
         linkIncrease: 'a[href="#more"]',
       },
+    },
+    cart: {
+      productList: '.cart__order-summary',
+      toggleTrigger: '.cart__summary',
+      totalNumber: `.cart__total-number`,
+      totalPrice: '.cart__total-price strong, .cart__order-total .cart__order-price-sum strong',
+      subtotalPrice: '.cart__order-subtotal .cart__order-price-sum strong',
+      deliveryFee: '.cart__order-delivery .cart__order-price-sum strong',
+      form: '.cart__order',
+      formSubmit: '.cart__order [type="submit"]',
+      phone: '[name="phone"]',
+      address: '[name="address"]',
+    },
+    cartProduct: {
+      amountWidget: '.widget-amount',
+      price: '.cart__product-price',
+      edit: '[href="#edit"]',
+      remove: '[href="#remove"]',
     },
   };
 
@@ -38,6 +57,9 @@ const select = {
       wrapperActive: 'active',
       imageVisible: 'active',
     },
+    cart: {
+      wrapperActive: 'active',
+    },
   };
 
   const settings = {
@@ -45,11 +67,15 @@ const select = {
       defaultValue: 1,
       defaultMin: 1,
       defaultMax: 9,
-    }
+    },
+    cart: {
+      defaultDeliveryFee: 20,
+    },
   };
 
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
+    cartProduct: Handlebars.compile(document.querySelector(select.templateOf.cartProduct).innerHTML),
   };
 
   class Product{
@@ -66,6 +92,7 @@ const select = {
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
 
+      //console.log('new Product:', thisProduct);
     }
 
     renderInMenu(){
@@ -99,7 +126,11 @@ const select = {
     initAccordion(){
       const thisProduct = this;
 
+      /* find the clickable trigger (the element that should react to clicking) */
+      //const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+
       /* START: add event listener to clickable trigger on event click */
+      //clickableTrigger.addEventListener('click', function(event) {
       thisProduct.accordionTrigger.addEventListener('click', function(event) {
 
         /* prevent default action for event */
@@ -121,6 +152,7 @@ const select = {
 
     initOrderForm(){
       const thisProduct = this;
+      //console.log('Product name: ', thisProduct);
 
       thisProduct.form.addEventListener('submit', function(event){
         event.preventDefault();
@@ -141,9 +173,11 @@ const select = {
 
     processOrder(){
       const thisProduct = this;
+      //console.log('Product name: ', thisProduct);
 
       /* covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}*/
       const formData = utils.serializeFormToObject(thisProduct.form);
+      //console.log('formData', formData);
 
       /* set price to default price */
       let price = thisProduct.data.price;
@@ -153,14 +187,14 @@ const select = {
 
         /* determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... } */
         const param = thisProduct.data.params[paramId];
-        
+        //console.log(paramId, param);
 
         /* for every option in this category */
         for(let optionId in param.options) {
 
           /* determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true } */
           const option = param.options[optionId];
-          
+          //console.log(optionId, option);
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
         
           /* check if there is param with a name of paramId in formData and if it includes optionId */
@@ -221,7 +255,8 @@ const select = {
       thisWidget.setValue(settings.amountWidget.defaultValue);  //thisWidget.setValue(thisWidget.input.value);
       thisWidget.initAction();
 
-  
+      //console.log('AmountWidget:', thisWidget);
+      //console.log('constructor arguments:', element);
     }
 
     getElements(element){
@@ -245,7 +280,7 @@ const select = {
       }
 
       thisWidget.input.value = thisWidget.value;
-      
+      console.log('It works!');
     }
 
     initAction(){
@@ -278,7 +313,10 @@ const select = {
   const app = {
     initMenu: function(){
       const thisApp = this;
-      
+      //console.log('thisApp.data:', thisApp.data);
+
+      //const testProduct = new Product();
+      //console.log('test Product:', testProduct);
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
       }
