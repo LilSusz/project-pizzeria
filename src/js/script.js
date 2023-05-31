@@ -316,7 +316,7 @@ const select = {
       const thisWidget = this;
 
       thisWidget.getElements(element);
-      thisWidget.setValue(settings.amountWidget.defaultValue);  //thisWidget.setValue(thisWidget.input.value);
+      thisWidget.setValue(thisWidget.input.value || settings.amountWidget.defaultValue);
       thisWidget.initAction();
 
       //console.log('AmountWidget:', thisWidget);
@@ -368,7 +368,10 @@ const select = {
     announce(){
       const thisWidget = this;
 
-      const event = new Event ('updated');
+      //const event = new Event ('updated');
+      const event = new CustomEvent('updated', {
+        bubbles: true
+      });
       thisWidget.element.dispatchEvent(event);
     }
 
@@ -406,6 +409,10 @@ const select = {
       thisCart.dom.toggleTrigger.addEventListener('click', function () {
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+
+      thisCart.dom.productList.addEventListener('updated', function () {
+        thisCart.update();
+      });
     }
 
     add(menuProduct){
@@ -438,7 +445,7 @@ const select = {
         subtotalPrice += product.price;
         console.log('totalPrice: $' + (subtotalPrice + deliveryFee));
       }
-      if (totalNumber == 0) {
+      if (totalNumber === 0) {
         deliveryFee = 0;
       }
       thisCart.totalPrice = subtotalPrice + deliveryFee;
