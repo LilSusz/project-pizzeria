@@ -153,7 +153,6 @@
 
         /* toggle active class on thisProduct.element */
         thisProduct.element.classList.toggle('active');
-
       });
     }
 
@@ -234,7 +233,6 @@
               optionImage.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
-
         }
       }
 
@@ -380,7 +378,6 @@
       });
       thisWidget.element.dispatchEvent(event);
     }
-
   }
 
   class Cart {
@@ -407,6 +404,9 @@
       thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
       thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
+      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
     }
 
     initActions() {
@@ -423,6 +423,11 @@
       thisCart.dom.productList.addEventListener('remove', function (event) {
         console.log('event.detail.cartProduct: ', event.detail.cartProduct);
         thisCart.remove(event.detail.cartProduct);
+      });
+
+      thisCart.dom.form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        thisCart.sendOrder();
       });
     }
 
@@ -441,7 +446,6 @@
       //console.log('thisCart.products', thisCart.products)
       thisCart.update();
     }
-
 
     update() {
       const thisCart = this;
@@ -472,12 +476,49 @@
 
     remove(cartProduct){
       const thisCart = this;
+
       cartProduct.dom.wrapper.remove();
       const currentIndex = thisCart.products.indexOf(cartProduct);
       thisCart.products.splice(currentIndex, 1);
       console.log('thisCart: ', thisCart);
       console.log('currentIndex: ' + currentIndex);
       thisCart.update();
+    }
+
+    sendOrder(){
+      const thisCart = this;
+
+      const url = settings.db.url + '/' + settings.db.orders;
+      const payload = {
+        phone: thisCart.dom.phone.value,
+        address: thisCart.dom.address.value,
+        totalPrice: thisCart.totalPrice,
+        subtotalPrice: thisCart.subtotalPrice,
+        totalNumber: thisCart.totalNumber,
+        deliveryFee: thisCart.deliveryFee,
+        products: [],
+      };
+
+      for(let prod of thisCart.products) {
+        payload.products.push(prod.getData());
+      }
+      console.log('thisCart.payload: ', thisCart.payload);
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Contene-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      };
+      fetch(url, options)
+        .then(function(response){
+          console.log('response: ', response);
+          return response.json();
+      }).then(function(parsedResponse){
+        console.log('parasedResponse', parsedResponse);
+      });
+    console.log('payload: ', payload);
     }
   }
 
@@ -495,7 +536,6 @@
       thisCartProduct.initAmountWidget();
       thisCartProduct.initActions();
       //console.log('new CartProduct', thisCartProduct);
-
     }
 
     getElements(element) {
@@ -507,7 +547,6 @@
       thisCartProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
       thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
       thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
-
     }
 
     initAmountWidget() {
@@ -547,7 +586,21 @@
         //console.log('Remove!');
         thisCartProduct.remove();
       });
+    }
 
+    getData() {
+      const thisCartProduct = this;
+
+      const detail = {
+        id: thisCartProduct.id,
+        amount: thisCartProduct.amount,
+        price: thisCartProduct.price,
+        priceSingle: thisCartProduct.priceSingle,
+        name: thisCartProduct.name,
+        params: thisCartProduct.params,
+      };
+      console.log('detail: ', detail);
+      return detail;
     }
   }
 
@@ -578,11 +631,9 @@
           thisApp.data.products = parsedResponse;
           /* execute initMenu method */
           thisApp.initMenu();
-          
         });
       
       console.log('thisApp.data', JSON.stringify(thisApp.data));
-
     },
 
     initCart: function () {
@@ -590,7 +641,6 @@
 
       const cartElem = document.querySelector(select.containerOf.cart);
       thisApp.cart = new Cart(cartElem);
-
     },
 
     init: function () {
@@ -605,7 +655,6 @@
       //thisApp.initMenu();
       thisApp.initCart();
     },
-
   };
 
   app.init();
