@@ -132,7 +132,6 @@
       const thisProduct = this;
 
       /* START: add event listener to clickable trigger on event click */
-      
       thisProduct.dom.accordionTrigger.addEventListener('click', function (event) {
 
         /* prevent default action for event */
@@ -276,7 +275,8 @@
 
         /* determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... } */
         const param = thisProduct.data.params[paramId];
-      
+
+        // create category param in params const eg. params = { ingredients: { name: 'Ingredients', options: {}}}
         params[paramId] = {
           label: param.label,
           options: {},
@@ -292,7 +292,6 @@
             /* option is selected! */
             const optionLabel = param.options[optionId].label;
             params[paramId].options[optionId] = optionLabel;
-
           }
         }
       }
@@ -308,7 +307,6 @@
       thisWidget.getElements(element);
       thisWidget.setValue(thisWidget.input.value || settings.amountWidget.defaultValue);
       thisWidget.initAction();
-
     }
 
     getElements(element) {
@@ -332,7 +330,6 @@
       }
 
       thisWidget.input.value = thisWidget.value;
-   
     }
 
     initAction() {
@@ -350,7 +347,6 @@
       thisWidget.linkIncrease.addEventListener('click', function (event) {
         event.preventDefault();
         thisWidget.setValue(thisWidget.value + 1);
-       
       });
     }
 
@@ -403,6 +399,7 @@
       });
 
       thisCart.dom.productList.addEventListener('remove', function (event) {
+        console.log('event.detail.cartProduct: ', event.detail.cartProduct);
         thisCart.remove(event.detail.cartProduct);
       });
 
@@ -481,16 +478,16 @@
       const options = {
         method: 'POST',
         headers: {
-          'Contene-Type': 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload)
       };
       fetch(url, options)
         .then(function(response){
           return response.json();
-      }).then(function(parsedResponse){
+        }).then(function(parsedResponse){
         console.log('parasedResponse', parsedResponse);
-      });
+        });
     }
   }
 
@@ -568,6 +565,7 @@
         name: thisCartProduct.name,
         params: thisCartProduct.params,
       };
+      
       return detail;
     }
   }
@@ -577,7 +575,7 @@
       const thisApp = this;
 
       for (let productData in thisApp.data.products) {
-        new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]); 
+        new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
       }
     },
 
@@ -596,7 +594,6 @@
           /* execute initMenu method */
           thisApp.initMenu();
         });
-      
     },
 
     initCart: function () {
