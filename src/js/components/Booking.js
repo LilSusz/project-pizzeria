@@ -13,6 +13,7 @@ class Booking {
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
+    thisBooking.selected = [];
   }
 
   getData(){
@@ -172,6 +173,7 @@ class Booking {
     thisBooking.dom.datePicker = document.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = document.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+    thisBooking.dom.tablesContainer = thisBooking.dom.wrapper.querySelector(select.booking.tablesContainer);
   }
 
   initWidgets(){
@@ -194,8 +196,40 @@ class Booking {
     });
 
     thisBooking.dom.wrapper.addEventListener('updated', function(){
+      for (let table of thisBooking.dom.tables) {
+        table.classList.remove(classNames.booking.tableSelected);
+      }
       thisBooking.updateDOM();
     });
+
+    thisBooking.dom.tablesContainer.addEventListener('click', function(event){
+      thisBooking.initTables(event);
+    });
+  }
+
+  initTables(event){
+    const thisBooking = this;
+
+    const clickedElem = event.target;
+    event.preventDefault();
+
+    const tableId = clickedElem.getAttribute(settings.booking.tableIdAttribute);
+
+    if(tableId) {
+      if(clickedElem.classList.contains(classNames.booking.tableBooked)){
+        alert('Table unavailable');
+      } else {
+        if (clickedElem.classList.contains(classNames.booking.tableSelected)){
+          clickedElem.classList.remove(classNames.booking.tableSelected);
+        } else {
+          for (let table of thisBooking.dom.tables){
+            table.classList.remove(classNames.booking.tableSelected);
+          }
+          clickedElem.classList.add(classNames.booking.tableSelected);
+          thisBooking.tableSelected = tableId;
+        }
+      }
+    }
   }
 }
 
