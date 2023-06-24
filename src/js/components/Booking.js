@@ -39,12 +39,15 @@ class Booking {
     };
 
     const urls = {
-      booking:       settings.db.url + '/' + settings.db.bookings
+    /*booking:       settings.db.url + '/' + settings.db.bookings
                                      + '?' + params.booking.join('&'),
       eventsCurrent: settings.db.url + '/' + settings.db.events
                                      + '?' + params.eventsCurrent.join('&'),
       eventsRepeat:  settings.db.url + '/' + settings.db.events
-                                     + '?' + params.eventsRepeat.join('&'),
+                                     + '?' + params.eventsRepeat.join('&'),*/
+      booking:      `${settings.db.url}/${settings.db.bookings}?${params.booking.join('&')}`,
+      eventsCurrent:`${settings.db.url}/${settings.db.events}  ?${params.eventsCurrent.join('&')}`,
+      eventsRepeat: `${settings.db.url}/${settings.db.events}  ?${params.eventsRepeat.join('&')}`,
     };
 
     Promise.all([
@@ -231,7 +234,8 @@ class Booking {
   sendBooking(){
     const thisBooking = this;
 
-    const url = settings.db.url + '/' + settings.db.bookings;
+    //const url = settings.db.url + '/' + settings.db.bookings;
+    const url = `${settings.db.url}/${settings.db.bookings}`;
     const payload = {
       date: thisBooking.datePicker.value,
       hour: thisBooking.hourPicker.value,
