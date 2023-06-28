@@ -16,7 +16,22 @@ const app = {
     const thisApp = this;
 
     const homeContainer = document.querySelector(select.containerOf.home);
+    console.log('homeContainer', homeContainer);
     thisApp.home = new Home(homeContainer);
+
+    thisApp.homeLinks = document.querySelectorAll(select.home.homeLinks);
+    console.log('thisApp.homeLinks', thisApp.homeLinks.length);
+    for(let homeLink of thisApp.homeLinks){
+      console.log('homeLink', homeLink);
+      homeLink.addEventListener('click', function(event){
+        const clickedElement = this;
+        event.preventDefault();
+        const linkId = clickedElement.getAttribute('href').replace('#', '');
+        thisApp.activatePage(linkId);
+        window.location.hash = '#/' + linkId;
+        console.log('window', window.location.hash);
+      });
+    }
   },
 
   initPages: function() {

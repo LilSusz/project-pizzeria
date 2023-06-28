@@ -77,7 +77,7 @@ export const select = {
     links: '.main-nav a',
   },
   home: {
-    homeLinks: '.home-button',
+    homeLinks: '.link-btn',
   }
 };
 
