@@ -1,0 +1,168 @@
+/* Main */
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 70px 0;
+    font-family: $font-header;
+    font-weight: $font-normal;
+    letter-spacing: 0.9px;
+    font-size: 24px;
+    color: $color-light;
+    text-transform: uppercase;
+    
+    &__links {
+      display: flex;
+      gap: 10px;
+    }
+    
+    &__info {
+      background-color: $color-main;
+      height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: $radius;
+    }
+    
+    &__info p {
+      margin: 0;
+    }
+    
+    &__subtitle {
+      font-family: $font-text;
+      font-size: 18px;
+    }
+  }
+    
+  .link-btn {
+    width: 50%;
+    color: $color-light;
+    
+    &__wrapper {
+      max-width: 100%;
+      height: 140px;
+      position: relative;
+    }
+    
+    &__wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: $radius;
+    }
+    
+    &__wrapper:hover p {
+      transform: translate(-50%, -90%);
+    }
+    
+    &__wrapper p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin: 0;
+      transition: transform 0.3s ease-out;
+    }
+  }
+    
+  /* Carousel */
+    
+  .main-carousel {
+    padding:30px 0;
+  }
+    
+  .carousel-cell {
+    width: 100%;
+    height: 200px;
+    margin-right: 10px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    
+    &__image {
+      flex: 40%;
+    }
+    
+    &__description {
+      flex: 40%;
+    
+      .guest {
+        font-style: italic;
+        font-size: 1.1em;
+        font-weight: 500;
+      }
+    }
+    
+    &__image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+    
+  /* Gallery */
+    
+  .gallery {
+    margin: 100px 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    
+    &__image {
+      height: 200px;
+      flex: 30%;
+      position: relative;
+    
+      &__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #33333399;
+        opacity: 0;
+        transition: all 0.3s ease-in;
+    
+        &__icons {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          z-index: 1;
+        }
+    
+        &__icons i {
+          margin: 10px;
+          transition: all 0.3s ease-in;
+        }
+    
+        &__icons i:hover {
+          color: $color-danger;
+          font-size: 1.6em;
+        }
+      }
+    
+      &__overlay:hover {
+        opacity: 0.8;
+      }
+    
+      &__overlay:hover i {
+        font-size: 20px;
+      }
+    }
+    
+    &__image img {
+      width: 100%;
+      height: 100%;
+      border-radius: $radius;
+    }
+    
+    &__image i {
+      color: $color-main;
+      font-weight: 900;
+    }
+  }
