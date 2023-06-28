@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Pizzeria</title>
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext" rel="stylesheet">
-  <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="./vendor/range-slider.min.css">
   <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
@@ -22,6 +22,7 @@
           <h2 class="logo__subtitle">the best homemade Italian food</h2>
         </div>
         <div class="main-nav">
+          <a href="#home">Home</a>
           <a href="#order">Order</a>
           <a href="#booking">Booking</a>
         </div>
@@ -63,6 +64,9 @@
   </header>
 
   <div id="pages">
+    <section id="home">
+      <div class="home-wrapper container"></div>
+    </section>
     <section id="order">
       <div id="product-list" class="product-list container"></div>
     </section>
@@ -70,6 +74,131 @@
       <div class="booking-wrapper container"></div>
     </section>
   </div>
+
+  <script id="template-home" type="text/x-handlebars-template">
+    <div class="main">
+      <div class="main__links">
+        <a href="#order" class="link-btn">
+          <div class="link-btn__wrapper">
+            <p class="main__title">ORDER ONLINE</p>
+            <img src="./images/design/pizza-1.jpg" alt="hot pizza" />
+          </div>
+        </a>
+        <a href="#booking" class="link-btn">
+          <div class="link-btn__wrapper">
+            <p class="main__title">BOOK A TABLE</p>
+            <img src="./images/design/pizza-2.jpg" alt="full table" />
+          </div>
+        </a>
+      </div>
+      <div class="main__info">
+        <p class="main__title">OPENING HOURS:</p>
+        <p class="main__subtitle">TUE-SUN, 12PM - 12AM</p>
+      </div>
+    </div>
+    <div class="main-carousel" data-flickity='{ "autoPlay": true }'>
+      <div class="carousel-cell">
+        <div class="carousel-cell__image">
+          <img src="./images/design/pizza-3.jpg" alt="people eating" />
+        </div>
+        <div class="carousel-cell__description">
+          <h1>Delicious food</h1>
+          <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p class="guest">- John Doe</p>
+        </div>
+      </div>
+      <div class="carousel-cell">
+        <div class="carousel-cell__image">
+          <img src="./images/design/pizza-3.jpg" alt="people eating" />
+        </div>
+        <div class="carousel-cell__description">
+          <h1>Great venue</h1>
+          <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p class="guest">- Eva Smith</p>
+        </div>
+      </div>
+      <div class="carousel-cell">
+        <div class="carousel-cell__image">
+          <img src="./images/design/pizza-3.jpg" alt="people eating" />
+        </div>
+        <div class="carousel-cell__description">
+          <h1>Best service</h1>
+          <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p class="guest">- Kaslik Amanow</p>
+        </div>
+      </div>
+      <div class="carousel-cell">
+        <div class="carousel-cell__image">
+          <img src="./images/design/pizza-3.jpg" alt="people eating" />
+        </div>
+        <div class="carousel-cell__description">
+          <h1>Good snacks</h1>
+          <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p class="guest">- Rupert Sasnow</p>
+        </div>
+      </div>
+    </div>
+    <div class="gallery">
+      <div class="gallery__image">
+        <div class="gallery__image__overlay">
+          <div class="gallery__image__overlay__icons">
+            <i class="fas fa-solid fa-heart"></i>
+            <i class="fas fa-solid fa-share"></i>
+          </div>
+        </div>
+        <img src="./images/design/pizza-4.jpg" alt="appetizer" />
+      </div>
+      <div class="gallery__image">
+        <div class="gallery__image__overlay">
+          <div class="gallery__image__overlay__icons">
+            <i class="fas fa-solid fa-heart"></i>
+            <i class="fas fa-solid fa-share"></i>
+          </div>
+        </div>
+        <img src="./images/design/pizza-5.jpg" alt="plate with food" />
+      </div>
+      <div class="gallery__image">
+        <div class="gallery__image__overlay">
+          <div class="gallery__image__overlay__icons">
+            <i class="fas fa-solid fa-heart"></i>
+            <i class="fas fa-solid fa-share"></i>
+          </div>
+        </div>
+        <img src="./images/design/pizza-6.jpg" alt="vege pizza" />
+      </div>
+      <div class="gallery__image">
+        <div class="gallery__image__overlay">
+          <div class="gallery__image__overlay__icons">
+            <i class="fas fa-solid fa-heart"></i>
+            <i class="fas fa-solid fa-share"></i>
+          </div>
+        </div>
+        <img src="./images/design/pizza-7.jpg" alt="open place" />
+      </div>
+      <div class="gallery__image">
+        <div class="gallery__image__overlay">
+          <div class="gallery__image__overlay__icons">
+            <i class="fas fa-solid fa-heart"></i>
+            <i class="fas fa-solid fa-share"></i>
+          </div>
+        </div>
+        <img src="./images/design/pizza-8.jpg" alt="making pizza" />
+      </div>
+      <div class="gallery__image">
+        <div class="gallery__image__overlay">
+          <div class="gallery__image__overlay__icons">
+            <i class="fas fa-solid fa-heart"></i>
+            <i class="fas fa-solid fa-share"></i>
+          </div>
+        </div>
+        <img src="./images/design/pizza-9.jpg" alt="entry" />
+      </div>
+    </div>
+  </script>
 
   <script id="template-cart-product" type="text/x-handlebars-template">
     <li>
